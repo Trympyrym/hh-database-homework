@@ -1,0 +1,10 @@
+users
+companies
+vacancies
+cv
+emails
+skills_needed
+skills_provided
+userslastvisit
+vacancies_timeline
+messages
