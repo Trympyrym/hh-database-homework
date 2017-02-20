@@ -1,4 +1,4 @@
-1) Ðàáîòîäàòåëè áåç âàêàíñèé
+ï»¿1) Ð Ð°Ð±Ð¾Ñ‚Ð¾Ð´Ð°Ñ‚ÐµÐ»Ð¸ Ð±ÐµÐ· Ð²Ð°ÐºÐ°Ð½ÑÐ¸Ð¹
 
 SELECT
 	companies.name AS name,
@@ -18,7 +18,7 @@ FROM
 WHERE
 	vacancies.owner IS NULL;
 
-2) Âàêàíñèè, ñðîê ðàçìåùåíèÿ êîòîðûõ èñòåêàåò ìåíåå ÷åì ÷åðåç ñóòêè
+2) Ð’Ð°ÐºÐ°Ð½ÑÐ¸Ð¸, ÑÑ€Ð¾Ðº Ñ€Ð°Ð·Ð¼ÐµÑ‰ÐµÐ½Ð¸Ñ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð¸ÑÑ‚ÐµÐºÐ°ÐµÑ‚ Ð¼ÐµÐ½ÐµÐµ Ñ‡ÐµÐ¼ Ñ‡ÐµÑ€ÐµÐ· ÑÑƒÑ‚ÐºÐ¸
 
 SELECT 
 	vacancies.position AS position,
@@ -37,7 +37,7 @@ WHERE
 	vacancies_timeline.duration @> now()::timestamp 
 	AND upper(vacancies_timeline.duration) - '24 hours'::interval < now()::timestamp
 
-3) Àêòèâíûå âàêàíñèè, ðàçìåùåííûå áîëåå ÷åì íåäåëþ, íî áåç ñîîáùåíèé îò ñîèñêàòåëåé
+3) ÐÐºÑ‚Ð¸Ð²Ð½Ñ‹Ðµ Ð²Ð°ÐºÐ°Ð½ÑÐ¸Ð¸, Ñ€Ð°Ð·Ð¼ÐµÑ‰ÐµÐ½Ð½Ñ‹Ðµ Ð±Ð¾Ð»ÐµÐµ Ñ‡ÐµÐ¼ Ð½ÐµÐ´ÐµÐ»ÑŽ, Ð½Ð¾ Ð±ÐµÐ· ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹ Ð¾Ñ‚ ÑÐ¾Ð¸ÑÐºÐ°Ñ‚ÐµÐ»ÐµÐ¹
 
 SELECT 
 	vacancies.position AS position,
@@ -59,7 +59,7 @@ WHERE
 	AND lower(vacancies_timeline.duration) + '1 week'::interval < now()::timestamp
 	AND messages.vacancy IS NULL;
 
-4) Ñïèñîê âàêàíñèé + êîëè÷åñòâî îòêëèêíóâøèõñÿ
+4) Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð²Ð°ÐºÐ°Ð½ÑÐ¸Ð¹ + ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¾Ñ‚ÐºÐ»Ð¸ÐºÐ½ÑƒÐ²ÑˆÐ¸Ñ…ÑÑ
 
 SELECT 
 	vacancies.position AS position,
@@ -79,24 +79,7 @@ GROUP BY
 	ccompanies.name;
 
 
-SELECT 
-	VACANCIES_STATIC.position	AS position,
-	COMPANIES.name			AS companyName,
-	COUNT(DISTINCT CV.owner)	AS numberOfUniqueResponses
-FROM
-	VACANCIES_STATIC
-	LEFT JOIN COMPANIES
-		ON VACANCIES_STATIC.owner = COMPANIES.id
-	LEFT JOIN MESSAGES
-		ON VACANCIES_STATIC.id = MESSAGES.vacancy
-		AND MESSAGES.direction = direction.toEmployer
-	LEFT JOIN CV
-		ON MESSAGES.cv = CV.id
-GROUP BY
-	position,
-	companyName
-
-5) Ñðåäíåå êîëè÷åñòâî ñîîáùåíèé íà âàêàíñèþ ó êîìïàíèè
+5) Ð¡Ñ€ÐµÐ´Ð½ÐµÐµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹ Ð½Ð° Ð²Ð°ÐºÐ°Ð½ÑÐ¸ÑŽ Ñƒ ÐºÐ¾Ð¼Ð¿Ð°Ð½Ð¸Ð¸
 SELECT
 	COUNT(messages.vacancy) / COUNT(DISTINCT messages.vacancy) AS responses_per_vacancy,
 	companies.name AS companyname
